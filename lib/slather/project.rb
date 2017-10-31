@@ -175,7 +175,16 @@ module Slather
         if coverage_files.count == 0
           # Look up one directory
           # The ProfileData directory is next to Intermediates.noindex (in previous versions of Xcode the coverage was inside Intermediates)
-          coverage_files = Dir[File.join(build_directory, "../**/ProfileData/*/Coverage.profdata")]
+          
+		  for i in 0..10
+			  coverage_files = Dir[File.join(build_directory, "../**/ProfileData/*/Coverage.profdata")]
+			  if coverage_files.count > 0 then
+				  break
+			  end
+			  
+			  sleep(0.1)
+		  end
+		  
         end
 
         if coverage_files != nil
